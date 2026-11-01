@@ -1,6 +1,6 @@
 package com.lucciano.ironssablecompat.mixin;
 
-import dev.ryanhcode.sable.companion.SableCompanion;
+import com.lucciano.ironssablecompat.helpers.TransformHelper;
 import io.redspace.ironsspellbooks.api.util.RaycastBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -53,7 +53,7 @@ public class RaycastBuilderMixin {
 
         if (originEntity != null) {
             Vec3 casterPos = originEntity.getEyePosition();
-            Vec3 realWorldCasterPos = SableCompanion.INSTANCE.projectOutOfSubLevel(level, casterPos);
+            Vec3 realWorldCasterPos = TransformHelper.AccountForSublevels(level, casterPos);
             // If the caster is inside a sub-level, keep it in the sub-level space
             if (realWorldCasterPos.distanceToSqr(casterPos) > 0.01) {
                 return original;
@@ -62,7 +62,7 @@ public class RaycastBuilderMixin {
 
         // Project the hit location out of sub-level space
         Vec3 hitLocation = original.getLocation();
-        Vec3 projected = SableCompanion.INSTANCE.projectOutOfSubLevel(level, hitLocation);
+        Vec3 projected = TransformHelper.AccountForSublevels(level, hitLocation);
 
         // If unchanged, not in a sub-level — return as-is
         if (projected.x == hitLocation.x && projected.y == hitLocation.y && projected.z == hitLocation.z) {
