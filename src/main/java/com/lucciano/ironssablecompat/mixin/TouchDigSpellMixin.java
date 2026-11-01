@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class TouchDigSpellMixin {
 
     @Redirect(
-        method = "onCast",
+        method = "onCast(Lnet/minecraft/world/level/Level;ILnet/minecraft/world/entity/LivingEntity;Lio/redspace/ironsspellbooks/api/spells/CastSource;Lio/redspace/ironsspellbooks/api/magic/MagicData;)V",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/phys/BlockHitResult;getLocation()Lnet/minecraft/world/phys/Vec3;"
@@ -25,8 +25,8 @@ public class TouchDigSpellMixin {
         
         // If the player is in sub-level, keep it in sub-level space!
         Vec3 casterPos = entity.getEyePosition();
-        Vec3 realWorldCasterPos = TransformHelper.AccountForSublevels(level, casterPos);;
-        if (realWorldCasterPos.distanceToSqr(casterPos) > 0.01) {
+        Vec3 realWorldCasterPos = TransformHelper.AccountForSublevels(level, casterPos);
+	    if (realWorldCasterPos.distanceToSqr(casterPos) > 0.01) {
             return original;
         }
 
@@ -35,7 +35,7 @@ public class TouchDigSpellMixin {
     }
 
     @Redirect(
-        method = "onCast",
+        method = "onCast(Lnet/minecraft/world/level/Level;ILnet/minecraft/world/entity/LivingEntity;Lio/redspace/ironsspellbooks/api/spells/CastSource;Lio/redspace/ironsspellbooks/api/magic/MagicData;)V",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/phys/Vec3;subtract(DDD)Lnet/minecraft/world/phys/Vec3;"

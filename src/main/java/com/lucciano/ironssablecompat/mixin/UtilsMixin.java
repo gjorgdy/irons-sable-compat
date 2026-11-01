@@ -52,7 +52,7 @@ public class UtilsMixin {
         }
     }
 
-    @Inject(method = "raycastForBlock", remap = false, at = @At("RETURN"), cancellable = true)
+    @Inject(method = "raycastForBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;", remap = false, at = @At("RETURN"), cancellable = true)
     private static void projectRaycastForBlock(Level level, Vec3 start, Vec3 end, ClipContext.Fluid clipContext,
             CallbackInfoReturnable<BlockHitResult> cir) {
         BlockHitResult original = cir.getReturnValue();
@@ -68,7 +68,7 @@ public class UtilsMixin {
         }
     }
 
-    @Inject(method = "getTargetBlock", remap = false, at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getTargetBlock(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/ClipContext$Fluid;D)Lnet/minecraft/world/phys/BlockHitResult;", remap = false, at = @At("RETURN"), cancellable = true)
     private static void projectGetTargetBlock(Level level, LivingEntity entity, ClipContext.Fluid clipContext,
             double reach, CallbackInfoReturnable<BlockHitResult> cir) {
         BlockHitResult original = cir.getReturnValue();
